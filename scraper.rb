@@ -1,25 +1,50 @@
-# This is a template for a Ruby scraper on morph.io (https://morph.io)
-# including some code snippets below that you should find helpful
+#!/bin/env ruby
+# encoding: utf-8
 
-# require 'scraperwiki'
-# require 'mechanize'
-#
-# agent = Mechanize.new
-#
-# # Read in a page
-# page = agent.get("http://foo.com")
-#
-# # Find somehing on the page using css selectors
-# p page.at('div.content')
-#
-# # Write out to the sqlite database using scraperwiki library
-# ScraperWiki.save_sqlite(["name"], {"name" => "susan", "occupation" => "software developer"})
-#
-# # An arbitrary query against the database
-# ScraperWiki.select("* from data where 'name'='peter'")
+require 'date'
+require 'nokogiri'
+require 'open-uri'
+require 'scraped'
+require 'scraperwiki'
 
-# You don't have to do things with the Mechanize or ScraperWiki libraries.
-# You can use whatever gems you want: https://morph.io/documentation/ruby
-# All that matters is that your final data is written to an SQLite database
-# called "data.sqlite" in the current working directory which has at least a table
-# called "data".
+class String
+  def titleize
+    split(/(\W)/).map(&:capitalize).join
+  end
+
+  def tidy
+    gsub(/[[:space:]]+/, ' ').strip
+  end
+end
+class Governor < Scraped::HTML
+  field :honorific_prefix do
+    noko.css('td')[3].text.split('.')[0...-1].join.titleize.tidy
+  end
+
+  field :name do
+    noko.css('td')[3].text.split('.')[-1].titleize.tidy
+  end
+
+  field :state do
+    noko.css('td')[1].text.titleize.tidy
+  end
+
+  field :party do
+    noko.css('td')[4].text.tidy
+  end
+end
+
+class GovernorsList < Scraped::HTML
+  field :governors do
+    noko.css('div#content table tr').drop(1).map do |governor|
+      Governor.new(response: response, noko: governor)
+    end
+  end
+end
+
+list = 'http://www.nigeriaembassyusa.org/index.php?page=state-governors'
+page = GovernorsList.new(response: Scraped::Request.new(url: list).response)
+
+page.governors.each do |governor|
+  ScraperWiki.save_sqlite([:name], governor)
+end

@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/everypolitician/scraped.git
+  revision: aabdf259f6cc2f746b50352e078a9141450e8d6e
+  specs:
+    scraped (0.1.0)
+      field_serializer
+      nokogiri
+      require_all
+
+GIT
   remote: https://github.com/openaustralia/scraperwiki-ruby.git
   revision: fc50176812505e463077d5c673d504a6a234aa78
   branch: morph_defaults
@@ -10,38 +19,36 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    domain_name (0.5.24)
-      unf (>= 0.0.5, < 1.0.0)
-    http-cookie (1.0.2)
-      domain_name (~> 0.5)
-    httpclient (2.6.0.1)
-    mechanize (2.7.3)
-      domain_name (~> 0.5, >= 0.5.1)
-      http-cookie (~> 1.0)
-      mime-types (~> 2.0)
-      net-http-digest_auth (~> 1.1, >= 1.1.1)
-      net-http-persistent (~> 2.5, >= 2.5.2)
-      nokogiri (~> 1.4)
-      ntlm-http (~> 0.1, >= 0.1.1)
-      webrobots (>= 0.0.9, < 0.2)
-    mime-types (2.5)
-    mini_portile (0.6.2)
-    net-http-digest_auth (1.4)
-    net-http-persistent (2.9.4)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
-    ntlm-http (0.1.1)
-    sqlite3 (1.3.10)
-    sqlite_magic (0.0.3)
+    coderay (1.1.1)
+    field_serializer (0.2.0)
+    httpclient (2.8.2.4)
+    method_source (0.8.2)
+    mini_portile2 (2.1.0)
+    nokogiri (1.6.8.1)
+      mini_portile2 (~> 2.1.0)
+    open-uri-cached (0.0.5)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    require_all (1.3.3)
+    slop (3.6.0)
+    sqlite3 (1.3.12)
+    sqlite_magic (0.0.6)
       sqlite3
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.7.1)
-    webrobots (0.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  mechanize
+  nokogiri
+  open-uri-cached
+  pry
+  scraped!
   scraperwiki!
+
+RUBY VERSION
+   ruby 2.3.3p222
+
+BUNDLED WITH
+   1.13.6
