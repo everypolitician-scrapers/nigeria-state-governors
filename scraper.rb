@@ -46,5 +46,5 @@ list = 'http://www.nigeriaembassyusa.org/index.php?page=state-governors'
 page = GovernorsList.new(response: Scraped::Request.new(url: list).response)
 
 page.governors.each do |governor|
-  ScraperWiki.save_sqlite([:name], governor)
+  ScraperWiki.save_sqlite([:name], governor.to_h)
 end
