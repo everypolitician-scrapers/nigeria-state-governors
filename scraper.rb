@@ -15,6 +15,10 @@ class String
   def tidy
     gsub(/[[:space:]]+/, ' ').strip
   end
+
+  def slugify
+    tidy.downcase.gsub(' ', '-').gsub(/[^\w-]/, '')
+  end
 end
 class Governor < Scraped::HTML
   field :honorific_prefix do
@@ -23,6 +27,10 @@ class Governor < Scraped::HTML
 
   field :name do
     noko.css('td')[3].text.split('.')[-1].titleize.tidy
+  end
+
+  field :id do
+    "gov:#{name.slugify}"
   end
 
   field :state do
