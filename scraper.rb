@@ -55,5 +55,6 @@ page = GovernorsList.new(response: Scraped::Request.new(url: list).response)
 
 ScraperWiki.sqliteexecute('DELETE FROM data') rescue nil
 page.governors.each do |governor|
+  puts "Saving #{governor}"
   ScraperWiki.save_sqlite([:name], governor.to_h)
 end
