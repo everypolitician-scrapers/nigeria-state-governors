@@ -233,7 +233,7 @@ end
 list = 'http://www.nigeriaembassyusa.org/index.php?page=state-governors'
 page = GovernorsList.new(response: Scraped::Request.new(url: list).response)
 
-ScraperWiki.sqliteexecute('DELETE FROM data') rescue nil
+ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
 page.governors.each do |governor|
   ScraperWiki.save_sqlite([:name], governor.to_h)
 end
