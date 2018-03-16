@@ -149,7 +149,7 @@ class Governor < Scraped::HTML
 
   def id_to_pombola_data
     @@id_to_pombola_data ||= begin
-      url = 'http://www.shineyoureye.org/media_root/popolo_json/persons.json'
+      url = 'http://pombola.shineyoureye.org/media_root/popolo_json/persons.json'
       popolo = JSON.parse(open(url, &:read))
       only_known = popolo.select { |h| POMBOLA_ID_TO_ID[h['id']] }
       only_known.map { |h| [POMBOLA_ID_TO_ID[h['id']], h] }.to_h
