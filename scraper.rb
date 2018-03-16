@@ -129,7 +129,9 @@ class Governor < Scraped::HTML
 
   field :image_url do
     image_urls = pombola_data.fetch('images', []).map { |i| i['url'] }
-    image_urls.first || ''
+    first_image_url = image_urls.first
+    return '' unless first_image_url
+    first_image_url.gsub(/www.shineyoureye.org/, 'pombola.shineyoureye.org')
   end
 
   field :website_url do
